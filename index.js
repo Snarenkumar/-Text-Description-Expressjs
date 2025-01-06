@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 
 // Load environment variables
 dotenv.config({ path: './.env.local' });
-
+const time = 180 ;
 // Import Google Generative AI module
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
@@ -31,12 +31,13 @@ const cleanResponse = (responseText) => {
         .trim();
 };
 
-// Function to generate voiceover content
+// Functidsfson to generate voiceover content
 const generateVoiceoverContent = async (prompt) => {
     try {
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-        const refinedPrompt = `Elaborate on the topic: "${prompt}" in a detailed and structured way, ensuring clarity and precision without conversational or unnecessary elements. Avoid numbered lists and excessive punctuation.`;
+        const refinedPrompt = `Elaborate on the topic:"${prompt}" in a detailed and structured way and with a simple language and simple words, ensuring clarity and precision without conversational or unnecessary elements. Avoid numbered lists and excessive punctuation for almost ${time} seconds. Please write me a YouTube video script as if you were a copyright expert for YouTube and Instagram, but don't mention anything about that in the content. Just provide the raw script.`;
+
         const result = await model.generateContent(refinedPrompt);
 
         const rawResponse = result.response.text();
@@ -52,7 +53,7 @@ const generateImagePrompts = (topic) => {
     const imagePrompts = [];
     for (let i = 1; i <= 12; i++) {
         imagePrompts.push(
-            `Create an image visualization for the following section of the topic: "${topic}". This is image ${i} of a continuous series, designed to sync with the explanation.`
+            `Create an image visualization for the following section of the topic: "${topic}". This is image ${i} of a continuous series, designed to sync with the explanation .`
         );
     }
     return imagePrompts;
@@ -91,7 +92,7 @@ app.get("/", (req, res) => {
     res.render("index.ejs");
 });
 
-// Start server
+// Start server 
 app.listen(port, () => {
     console.log(`Server is hosted on port: ${port}`);
 });
