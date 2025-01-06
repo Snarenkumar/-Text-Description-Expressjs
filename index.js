@@ -31,7 +31,7 @@ const cleanResponse = (responseText) => {
         .trim();
 };
 
-// Functisdsfson to gsaenerate voicsaeoverg content
+// Functisdsfson to gsaenerate voicsaeoverg conqwetent
 const generateVoiceoverContent = async (prompt) => {
     try {
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
