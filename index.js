@@ -22,14 +22,20 @@ if (!apiKey) {
 // Initialize Google Generative AI
 const genAI = new GoogleGenerativeAI(apiKey);
 
-// Utility function to format AI response
-const formatAIResponse = (responseText) => {
-    const structuredResponse = responseText
-        .split("\n") // Split by lines
-        .map((line) => line.trim()) // Remove extra spaces
-        .filter((line) => line.length > 0); // Remove empty lines
-
-    return structuredResponse.join("<br>"); // Convert to HTML with line breaks
+// Utility function to convert markdown to HTML
+const markdownToHTML = (text) => {
+    // Replace **bold** with <strong>bold</strong>
+    text = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+    
+    // Replace *italic* with <em>italic</em>
+    text = text.replace(/\*(.*?)\*/g, "<em>$1</em>");
+    
+    // Replace new lines with <br> for line breaks
+    text = text.replace(/\n/g, "<br>");
+    
+    // You can add more replacements here for other markdown formatting
+    
+    return text;
 };
 
 // Function to use Generative AI
@@ -37,7 +43,7 @@ const generateAIContent = async (prompt) => {
     try {
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
         const result = await model.generateContent(prompt);
-        const formattedResponse = formatAIResponse(result.response.text());
+        const formattedResponse = markdownToHTML(result.response.text());
         return formattedResponse;
     } catch (error) {
         console.error("Error generating AI content:", error.message);
@@ -65,11 +71,11 @@ app.post("/submit", async (req, res) => {
 
     // Format response based on user preference
     if (format === "json") {
-        res.json({ prompt, response: aiResponse });
+        return res.json({ prompt, response: aiResponse });
     } else if (format === "html") {
-        res.send(`<div>${aiResponse}</div>`);
+        return res.send(`<div>${aiResponse}</div>`);
     } else {
-        res.send(aiResponse); // Default to plain text
+        return res.send(aiResponse); // Default to plain text
     }
 });
 
