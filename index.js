@@ -30,8 +30,8 @@ const cleanResponse = (responseText) => {
         .replace(/[!]+/g, ".") // Replace exclamation marks with periods
         .trim();
 };
-s
-// Functisdsfson to generate voicsaeover content
+
+// Functisdsfson to generate voiceover content
 const generateVoiceoverContent = async (prompt) => {
     try {
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
