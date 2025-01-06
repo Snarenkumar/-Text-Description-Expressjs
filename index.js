@@ -22,23 +22,40 @@ if (!apiKey) {
 // Initialize Google Generative AI
 const genAI = new GoogleGenerativeAI(apiKey);
 
-// Function to return raw text without any formatting
-const getRawAIResponse = (responseText) => {
-    // Remove line breaks and extra spaces
-    return responseText.replace(/\n+/g, ' ').trim();
+// Function to return cleaned response
+const cleanResponse = (responseText) => {
+    return responseText
+        .replace(/\*\*|\*/g, "") // Remove markdown stars
+        .replace(/^[0-9]+\.?\s*/gm, "") // Remove numbered lists
+        .replace(/[!]+/g, ".") // Replace exclamation marks with periods
+        .trim();
 };
 
-// Function to use Generative AI
-const generateAIContent = async (prompt) => {
+// Function to generate voiceover content
+const generateVoiceoverContent = async (prompt) => {
     try {
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-        const result = await model.generateContent(prompt);
-        const rawResponse = getRawAIResponse(result.response.text());
-        return rawResponse;
+
+        const refinedPrompt = `Elaborate on the topic: "${prompt}" in a detailed and structured way, ensuring clarity and precision without conversational or unnecessary elements. Avoid numbered lists and excessive punctuation.`;
+        const result = await model.generateContent(refinedPrompt);
+
+        const rawResponse = result.response.text();
+        return cleanResponse(rawResponse);
     } catch (error) {
         console.error("Error generating AI content:", error.message);
         return "Error generating AI response.";
     }
+};
+
+// Function to generate image prompts
+const generateImagePrompts = (topic) => {
+    const imagePrompts = [];
+    for (let i = 1; i <= 12; i++) {
+        imagePrompts.push(
+            `Create an image visualization for the following section of the topic: "${topic}". This is image ${i} of a continuous series, designed to sync with the explanation.`
+        );
+    }
+    return imagePrompts;
 };
 
 // Middleware
@@ -51,22 +68,23 @@ app.set("views", "./views");
 
 // Routes
 app.post("/submit", async (req, res) => {
-    const { prompt, format } = req.body;
+    const { prompt } = req.body;
 
     if (!prompt || prompt.trim().length < 10) {
         return res.status(400).send("Prompt must be at least 10 characters long.");
     }
 
-    const aiResponse = await generateAIContent(prompt);
+    // Generate voiceover content
+    const voiceoverResponse = await generateVoiceoverContent(prompt);
 
-    // Format response based on user preference
-    if (format === "json") {
-        return res.json({ prompt, response: aiResponse });
-    } else if (format === "html") {
-        return res.send(`<div>${aiResponse}</div>`);
-    } else {
-        return res.send(aiResponse); // Default to plain text
-    }
+    // Generate image prompts
+    const imagePrompts = generateImagePrompts(prompt);
+
+    // Return response
+    return res.json({
+        voiceoverResponse,
+        imagePrompts
+    });
 });
 
 app.get("/", (req, res) => {

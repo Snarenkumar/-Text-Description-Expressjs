@@ -19,6 +19,7 @@
     "express": "^4.21.2",
     "gtts": "^0.2.1",
     "node-fetch": "^3.3.2",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "textdescription": "file:"
   }
 }
