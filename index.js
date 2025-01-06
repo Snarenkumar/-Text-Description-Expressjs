@@ -31,7 +31,7 @@ const cleanResponse = (responseText) => {
         .trim();
 };
 
-// Functisdsfsson to bbmbm voicsaeoversadsag conqwetentqweqwh
+// Functisdsfson to bbmbm voicsaeoverg conqwetentqweqwh
 const generateVoiceoverContent = async (prompt) => {
     try {
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
