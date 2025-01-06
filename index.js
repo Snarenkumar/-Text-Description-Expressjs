@@ -22,20 +22,10 @@ if (!apiKey) {
 // Initialize Google Generative AI
 const genAI = new GoogleGenerativeAI(apiKey);
 
-// Utility function to convert markdown to HTML
-const markdownToHTML = (text) => {
-    // Replace **bold** with <strong>bold</strong>
-    text = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
-    
-    // Replace *italic* with <em>italic</em>
-    text = text.replace(/\*(.*?)\*/g, "<em>$1</em>");
-    
-    // Replace new lines with <br> for line breaks
-    text = text.replace(/\n/g, "<br>");
-    
-    // You can add more replacements here for other markdown formatting
-    
-    return text;
+// Function to return raw text without any formatting
+const getRawAIResponse = (responseText) => {
+    // Remove line breaks and extra spaces
+    return responseText.replace(/\n+/g, ' ').trim();
 };
 
 // Function to use Generative AI
@@ -43,8 +33,8 @@ const generateAIContent = async (prompt) => {
     try {
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
         const result = await model.generateContent(prompt);
-        const formattedResponse = markdownToHTML(result.response.text());
-        return formattedResponse;
+        const rawResponse = getRawAIResponse(result.response.text());
+        return rawResponse;
     } catch (error) {
         console.error("Error generating AI content:", error.message);
         return "Error generating AI response.";
