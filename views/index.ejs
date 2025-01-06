@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>AI Response Generator</title>
     <style>
         button{
             background-color: rgb(58, 179, 245);
@@ -16,19 +16,23 @@
     </style>
 </head>
 <body>
-    <div class="ai-content">
-        
-        <h1 class="heading">Text Decription AI System</h1>
-        <div class="form">
-            <form method="post" action="/submit">
-
-                <textarea name="desc" cols="40" rows="10" id="des">  </textarea>
-                <br><br>
-                <button type="submit"> click here to submit </button>
-
-            </form>
-        </div>
+    <h1>AI Response Generator</h1>
+    <form method="post" action="/submit">
+        <textarea name="prompt" cols="40" rows="10" placeholder="Enter your prompt" required></textarea>
+        <br>
+        <label for="format">Choose Response Format:</label>
+        <select name="format" id="format">
+            <option value="text">Plain Text</option>
+            <option value="json">JSON</option>
+            <option value="html">HTML</option>
+        </select>
+        <br><br>
+        <button type="submit">Submit</button>
+    </form>
+    <hr>
+    <div id="response">
+        <h3>AI Response:</h3>
+        <p id="aiOutput"></p>
     </div>
-
 </body>
 </html>

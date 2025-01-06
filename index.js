@@ -1,30 +1,49 @@
 import express from "express";
 import bodyParser from "body-parser";
-import bcrypt from "bcrypt";
 import dotenv from "dotenv";
+
+// Load environment variables
 dotenv.config({ path: './.env.local' });
 
-const apiKey = process.env.API_KEY; // Access API key from .env
+// Import Google Generative AI module
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
-
+// Initialize Express app
 const app = express();
 const port = 3010;
 
-// Example password for hashing
-// const pass = "hello_@1234";
+// Access API key from .env.local
+const apiKey = process.env.API_KEY;
+if (!apiKey) {
+    console.error("API_KEY is not defined. Check your .env.local file.");
+    process.exit(1);
+}
 
-// Function to hash a value
-// const createHash = async (value) => {
-//     try {
-//         const hash = await bcrypt.hash(value, 10); // Use 10 salt rounds
-//         console.log(`Hashed Value: ${hash}`);
-//     } catch (err) {
-//         console.error("Error hashing value:", err);
-//     }
-// };
+// Initialize Google Generative AI
+const genAI = new GoogleGenerativeAI(apiKey);
 
-// Example usage
-// createHash(pass);
+// Utility function to format AI response
+const formatAIResponse = (responseText) => {
+    const structuredResponse = responseText
+        .split("\n") // Split by lines
+        .map((line) => line.trim()) // Remove extra spaces
+        .filter((line) => line.length > 0); // Remove empty lines
+
+    return structuredResponse.join("<br>"); // Convert to HTML with line breaks
+};
+
+// Function to use Generative AI
+const generateAIContent = async (prompt) => {
+    try {
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        const result = await model.generateContent(prompt);
+        const formattedResponse = formatAIResponse(result.response.text());
+        return formattedResponse;
+    } catch (error) {
+        console.error("Error generating AI content:", error.message);
+        return "Error generating AI response.";
+    }
+};
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -35,10 +54,23 @@ app.set("view engine", "ejs");
 app.set("views", "./views");
 
 // Routes
-app.post("/submit", (req, res) => {
-    const data = req.body;
-    console.log(data);
-    res.send("Sent successfully");
+app.post("/submit", async (req, res) => {
+    const { prompt, format } = req.body;
+
+    if (!prompt || prompt.trim().length < 10) {
+        return res.status(400).send("Prompt must be at least 10 characters long.");
+    }
+
+    const aiResponse = await generateAIContent(prompt);
+
+    // Format response based on user preference
+    if (format === "json") {
+        res.json({ prompt, response: aiResponse });
+    } else if (format === "html") {
+        res.send(`<div>${aiResponse}</div>`);
+    } else {
+        res.send(aiResponse); // Default to plain text
+    }
 });
 
 app.get("/", (req, res) => {
