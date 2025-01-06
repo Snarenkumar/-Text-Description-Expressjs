@@ -1,16 +1,30 @@
 import express from "express";
 import bodyParser from "body-parser";
 import bcrypt from "bcrypt";
-let dotenv = require('dotenv').config()
+import dotenv from "dotenv";
+dotenv.config({ path: './.env.local' });
+
+const apiKey = process.env.API_KEY; // Access API key from .env
+
+
 const app = express();
 const port = 3010;
-const pass = dotenv;
 
-const createHash = async () => {
-    const hash = await bcrypt.hash(pass, 10); // Use 10 salt rounds
-    console.log(hash);
-};
-createHash();
+// Example password for hashing
+// const pass = "hello_@1234";
+
+// Function to hash a value
+// const createHash = async (value) => {
+//     try {
+//         const hash = await bcrypt.hash(value, 10); // Use 10 salt rounds
+//         console.log(`Hashed Value: ${hash}`);
+//     } catch (err) {
+//         console.error("Error hashing value:", err);
+//     }
+// };
+
+// Example usage
+// createHash(pass);
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
