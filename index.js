@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 // Lssadasdadasoasdasad environsadasmenasdsast asdvariaasdasbles
 dotenv.config({ path: './.env.local' });
 const time = 180 ;
-// Import Googasdasle Generaasdastive AI module
+// Import Google Generative AI module
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 // Initialize Express app
