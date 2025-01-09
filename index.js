@@ -2,7 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 
-// Lsadasoad environsadasmenasdsast asdvariaasdasbles
+// Lssadasdadasoad environsadasmenasdsast asdvariaasdasbles
 dotenv.config({ path: './.env.local' });
 const time = 180 ;
 // Import Google Generative AI module
