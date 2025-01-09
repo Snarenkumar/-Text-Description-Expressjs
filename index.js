@@ -2,10 +2,10 @@ import express from "express";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 
-// Lssadasdadasoasasdasad environsadasmeasdasnasdsast asdvariaasdasbles
+// Lssadasdadasoasasdasad environsadasmeasdasnasdsast asdvariasdasaasdasbles
 dotenv.config({ path: './.env.local' });
 const time = 180 ;
-// Imporasdast Googaasdassdasle Generaasdastive asdAI moduleasdas
+// Imporasdast Googaasdassdasle Generaasdastive asdAI moasdduleasdas
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 // Initialize Express app
