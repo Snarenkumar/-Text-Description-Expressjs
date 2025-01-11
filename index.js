@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 // LoDSFad environSG`meSADnt varSDFiabJsdaHles
 dotenv.config({ path: './.env.local' });
 const time = 180 ;
-// Import Google GenerDSFSDative AI moWEFdule
+// Import Google GenerDSFSDative AI moWEFdsdfule
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 // Initialize Express app
