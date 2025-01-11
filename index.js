@@ -2,7 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 
-// LoDSFad environSG`ment varSDFiabJHles
+// LoDSFad environSG`meSADnt varSDFiabJHles
 dotenv.config({ path: './.env.local' });
 const time = 180 ;
 // Import Google GenerDSFSDative AI moWEFdule
