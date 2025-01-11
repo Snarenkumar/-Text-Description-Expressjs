@@ -2,10 +2,10 @@ import express from "express";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 
-// LoDSFad environSG`meSADnt varSDFiabJsdaHles
+// LoDSFad environSG`meSADnt varSDFiabJHles
 dotenv.config({ path: './.env.local' });
 const time = 180 ;
-// Import Google GenerDSFSDative AI moWEFdsdfule
+// Import Google GenerDSFSDative AI moWEFdule
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 // Initialize Express app
