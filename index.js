@@ -2,7 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 
-// Load environmasdent varisadables
+// Loasdad environmasdent varisadables
 dotenv.config({ path: './.env.local' });
 const time = 180 ;
 // Import Google Generative AI module
