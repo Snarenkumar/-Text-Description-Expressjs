@@ -8,7 +8,7 @@ const time = 180 ;
 // Import Google Generative AI module
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-// Iasdnitiaqwelize Exasdpress app
+// Iasdnitiaqwelize Exasdpress appasd
 const app = express();
 const port = 3010;
 
