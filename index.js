@@ -8,7 +8,7 @@ const time = 180 ;
 // Import Google Generative AI module
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-//asadsd Iaasdsdnitiaqwelsadize Easdxasdpress appasd
+//asadsd Iaasdsdnitiaqasdwelsadize Easdxasdpress appasd
 const app = express();
 const port = 3010;
 
