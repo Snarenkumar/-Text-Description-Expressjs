@@ -19,7 +19,7 @@ if (!apiKey) {
     process.exit(1);
 }
 
-// Initialize Google Generative AI
+// Initialize Google Generatisave AI
 const genAI = new GoogleGenerativeAI(apiKey);
 
 // Function to return cleaned response
