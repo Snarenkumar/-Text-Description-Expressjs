@@ -19,7 +19,7 @@ if (!apiKey) {
     process.exit(1);
 }
 
-// Iasasdnasditqwializeqw Google Genwqqweratiqsavwqe AIsa
+// Iasnasditqwializeqw Google Genwqqweratiqsavwqe AIsa
 const genAI = new GoogleGenerativeAI(apiKey);
 
 // Function to return cleaned response
